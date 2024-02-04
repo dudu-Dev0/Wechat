@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.dudu.wechat.widget.CurvedTextClock
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+    <androidx.wear.widget.CurvedTextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_gravity="center|top"
-        />
+        android:text="WeChat"/>
     <Button
         android:id="@+id/test"
         android:layout_height="wrap_content"

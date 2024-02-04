@@ -46,7 +46,7 @@ public class CurvedTextClock extends CurvedTextView {
         private boolean mStopped;
         private void post() {
             // 每隔1秒发送一次消息
-            sendMessageDelayed(obtainMessage(0), 1000);
+            sendMessageDelayed(obtainMessage(0), 60000);
         }
 
         @Override

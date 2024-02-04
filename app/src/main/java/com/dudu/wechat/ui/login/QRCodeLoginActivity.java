@@ -33,7 +33,7 @@ public class QRCodeLoginActivity extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://login.wx.qq.com/").build();
         LoginApi api = retrofit.create(LoginApi.class);
         Call<ResponseBody> call = api.getUuid(System.currentTimeMillis());
-        // new Thread(()->{
+        new Thread(()->{
         call.enqueue(
                 new Callback<ResponseBody>() {
                     @Override
@@ -67,6 +67,6 @@ public class QRCodeLoginActivity extends AppCompatActivity {
                         Log.e("", t.toString());
                     }
                 });
-        // });
+         }).start();
     }
 }
