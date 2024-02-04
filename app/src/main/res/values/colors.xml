@@ -5,6 +5,7 @@
   <color name="buttonColorNormal">#202124</color>
   <color name="cardBackgroundColorNormal">#202124</color>
   <color name="cardBackgroundColorGreen">#283431</color>
+  <color name="textColorGreen">#70E7A9</color>
   <color name="textColorNormal">#FFFFFF</color>
   <color name="textColorDark">#D2D3D3</color>
   <color name="textColorDarker">#A6A6A7</color>
