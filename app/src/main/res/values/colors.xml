@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+
+<resources>
+  <color name="buttonColorGreen">#70E7A9</color>
+  <color name="buttonColorNormal">#202124</color>
+  <color name="cardBackgroundColorNormal">#202124</color>
+  <color name="cardBackgroundColorGreen">#283431</color>
+  <color name="textColorNormal">#FFFFFF</color>
+  <color name="textColorDark">#D2D3D3</color>
+  <color name="textColorDarker">#A6A6A7</color>
+</resources>
