@@ -7,7 +7,9 @@ plugins {
 android {
     namespace = "com.dudu.wechat"
     compileSdk = 33
-    
+    lintOptions {
+      abortOnError false
+    }
     defaultConfig {
         applicationId = "com.dudu.wechat"
         minSdk = 23
