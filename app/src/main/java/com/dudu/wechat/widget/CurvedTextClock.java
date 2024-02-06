@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import androidx.wear.widget.CurvedTextView;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CurvedTextClock extends CurvedTextView {
     
@@ -83,23 +85,8 @@ public class CurvedTextClock extends CurvedTextView {
 
     private void updateClock() {
         // 获取当前的时间
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        String m = "";
-        String h = "";
-
-        if (hour < 10) {
-            h = "0" + hour;
-        } else {
-            h = hour + "";
-        }
-        if (minute < 10) {
-            m = "0" + minute;
-        } else {
-            m = minute + "";
-        }
-        time = h + ":" + m;
-        textView.setText(time);
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm");
+        textView.setText(simpleDateFormat.format(date));
     }
 }
