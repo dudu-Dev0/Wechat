@@ -1,5 +1,6 @@
 package com.dudu.wechat.ui.login;
 
+import android.net.Network;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.dudu.wechat.R;
 import com.dudu.wechat.api.LoginApi;
 import com.dudu.wechat.utils.JavaScriptUtil;
+import com.dudu.wechat.utils.NetworkUtil;
 import com.dudu.wechat.utils.QRCodeUtil;
 import com.google.android.material.card.MaterialCardView;
 import okhttp3.ResponseBody;
@@ -21,19 +23,19 @@ public class QRCodeLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code_login);
-        
+
         refreshQRCode();
-        
-        ((ImageView)findViewById(R.id.qr_code_view)).setOnClickListener(view->{
-            refreshQRCode();
-        });
-        
+
+        ((ImageView) findViewById(R.id.qr_code_view))
+                .setOnClickListener(
+                        view -> {
+                            refreshQRCode();
+                        });
     }
+
     private void refreshQRCode() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://login.wx.qq.com/").build();
-        LoginApi api = retrofit.create(LoginApi.class);
-        Call<ResponseBody> call = api.getUuid(System.currentTimeMillis());
-        new Thread(()->{
+        Call<ResponseBody> call = NetworkUtil.createLogin(LoginApi.class).getUuid(System.currentTimeMillis());
+
         call.enqueue(
                 new Callback<ResponseBody>() {
                     @Override
@@ -41,7 +43,7 @@ public class QRCodeLoginActivity extends AppCompatActivity {
                             Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()) {
                             try {
-                               // Log.e("", response.body().string());
+                                // Log.e("", response.body().string());
 
                                 String uuid =
                                         JavaScriptUtil.getString(
@@ -49,8 +51,15 @@ public class QRCodeLoginActivity extends AppCompatActivity {
                                 Log.e("uuid", uuid);
                                 runOnUiThread(
                                         () -> {
-                                            ((ImageView)findViewById(R.id.qr_code_view)).setImageBitmap(QRCodeUtil.createQRCodeBitmap("https://login.weixin.qq.com/l/"+uuid,100,100));
-                                            ((MaterialCardView)findViewById(R.id.qr_code_card)).setVisibility(View.VISIBLE);
+                                            ((ImageView) findViewById(R.id.qr_code_view))
+                                                    .setImageBitmap(
+                                                            QRCodeUtil.createQRCodeBitmap(
+                                                                    "https://login.weixin.qq.com/l/"
+                                                                            + uuid,
+                                                                    100,
+                                                                    100));
+                                            ((MaterialCardView) findViewById(R.id.qr_code_card))
+                                                    .setVisibility(View.VISIBLE);
                                         });
                             } catch (Exception err) {
 
@@ -67,6 +76,5 @@ public class QRCodeLoginActivity extends AppCompatActivity {
                         Log.e("", t.toString());
                     }
                 });
-         }).start();
     }
 }
