@@ -49,5 +49,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     //qrcode
     implementation("com.google.zxing:core:3.3.0")
-    
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.13.2")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
 }

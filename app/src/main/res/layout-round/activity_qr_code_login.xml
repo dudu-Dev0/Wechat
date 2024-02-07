@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical">
+    <com.dudu.wechat.widget.CurvedTextClock
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="16sp"/>
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+            <LinearLayout
+                android:id="@+id/box"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/textColorGreen"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="扫码登录微信" />
+                <FrameLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center">
+                    <ProgressBar
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:indeterminateTint="@color/buttonColorGreen"
+                        android:layout_gravity="center" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_height="120dp"
+                        android:layout_width="120dp"
+                        android:visibility="invisible"
+                        app:strokeColor="#00000000"
+                        app:cardBackgroundColor="#00000000"
+                        app:cardCornerRadius="20dp"
+                        app:cardForegroundColor="#00000000"
+                        android:id="@+id/qr_code_card">
+
+                        <ImageView
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:id="@+id/qr_code_view" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/login_tip_tv"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:textColor="@color/textColorDarker"
+                android:text="请使用手机\n微信扫码登录"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/box" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</FrameLayout>
