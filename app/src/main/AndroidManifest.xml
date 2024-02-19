@@ -7,6 +7,7 @@
         android:icon="@mipmap/ic_launcher" 
         android:roundIcon="@mipmap/ic_launcher" 
         android:label="@string/app_name" 
+        android:name="com.dudu.wechat.Wechat"
         android:supportsRtl="true" 
         android:theme="@style/AppTheme">
         <activity 

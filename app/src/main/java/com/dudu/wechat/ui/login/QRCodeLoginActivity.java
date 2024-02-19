@@ -70,7 +70,7 @@ public class QRCodeLoginActivity extends AppCompatActivity {
 
     private void waitForScan() {
         Call<ResponseBody> call =
-                NetworkUtil.createLogin(LoginApi.class)
+                NetworkUtil.createLogin(LoginApi.class, NetworkUtil.LOGIN_BASE_URL)
                         .waitForScan(uuid, System.currentTimeMillis());
         Log.e("WAITING_FOR_SCAN", call.request().url().url().toString());
 
@@ -81,7 +81,7 @@ public class QRCodeLoginActivity extends AppCompatActivity {
                             Call<ResponseBody> call, Response<ResponseBody> response) {
                         try {
                             String responseBody = response.body().string();
-                            Log.e("resp",responseBody);
+                            Log.e("resp", responseBody);
                             if (response.isSuccessful()) {
                                 runOnUiThread(
                                         () -> {
@@ -92,16 +92,32 @@ public class QRCodeLoginActivity extends AppCompatActivity {
                                                         scheduledExecutorService.shutdown();
                                                         scheduledExecutorService = null;
                                                     }
+
                                                     break;
                                                 case 201:
                                                     tipTv.setText("请在手机上\n确认登录");
                                                     titleTv.setText("扫码完成");
-                                                    qrCard.getLayoutParams().height = DensityUtil.dip2px(QRCodeLoginActivity.this,80);
-                                                    qrCard.getLayoutParams().width = DensityUtil.dip2px(QRCodeLoginActivity.this,80);
-                                                    Log.e("avatar",JavaScriptUtil.getBase64Data(responseBody,"window.userAvatar"));
+                                                    qrCard.getLayoutParams().height =
+                                                            DensityUtil.dip2px(
+                                                                    QRCodeLoginActivity.this, 80);
+                                                    qrCard.getLayoutParams().width =
+                                                            DensityUtil.dip2px(
+                                                                    QRCodeLoginActivity.this, 80);
+                                                    Log.e(
+                                                            "avatar",
+                                                            JavaScriptUtil.getBase64Data(
+                                                                    responseBody,
+                                                                    "window.userAvatar"));
                                                     Glide.with(QRCodeLoginActivity.this)
                                                             .load(
-                                                                    BitmapUtil.base64ToBitmap(JavaScriptUtil.getBase64Data(responseBody,"window.userAvatar").replace("data:img/jpg;base64,","")))
+                                                                    BitmapUtil.base64ToBitmap(
+                                                                            JavaScriptUtil
+                                                                                    .getBase64Data(
+                                                                                            responseBody,
+                                                                                            "window.userAvatar")
+                                                                                    .replace(
+                                                                                            "data:img/jpg;base64,",
+                                                                                            "")))
                                                             .diskCacheStrategy(
                                                                     DiskCacheStrategy.NONE)
                                                             .apply(
@@ -115,6 +131,7 @@ public class QRCodeLoginActivity extends AppCompatActivity {
                                                                     "登录超时",
                                                                     Toast.LENGTH_SHORT)
                                                             .show();
+                                                    refreshQRCode();
                                                     break;
                                                 default:
                                                     break;
@@ -144,8 +161,13 @@ public class QRCodeLoginActivity extends AppCompatActivity {
     }
 
     private void refreshQRCode() {
+        tipTv.setText("请使用手机微信扫码登录");
+        titleTv.setText("扫码登录");
+        qrCard.getLayoutParams().height = DensityUtil.dip2px(QRCodeLoginActivity.this, 140);
+        qrCard.getLayoutParams().width = DensityUtil.dip2px(QRCodeLoginActivity.this, 140);
         Call<ResponseBody> call =
-                NetworkUtil.createLogin(LoginApi.class).getUuid(System.currentTimeMillis());
+                NetworkUtil.createLogin(LoginApi.class, NetworkUtil.LOGIN_BASE_URL)
+                        .getUuid(System.currentTimeMillis());
         Log.e("call", call.request().url().url().toString());
         call.enqueue(
                 new Callback<ResponseBody>() {

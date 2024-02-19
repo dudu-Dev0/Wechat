@@ -33,7 +33,7 @@
                     android:textColor="@color/textColorGreen"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="扫码登录微信" />
+                    android:text="扫码登录" />
                 <FrameLayout
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
