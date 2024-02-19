@@ -7,6 +7,7 @@ public class Wechat extends Application {
     
     @Override
     public void onCreate() {
+        super.onCreate();
         context = getApplicationContext();
         SharedPreferencesUtil.getInstance(context,"config");
     }
