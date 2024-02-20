@@ -1,6 +1,7 @@
 package com.dudu.wechat;
 
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        
+        ((TextView)findViewById(R.id.chip)).setText(getIntent().getStringExtra("data"));
 
     }
 
