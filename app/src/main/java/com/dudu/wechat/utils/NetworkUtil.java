@@ -55,7 +55,7 @@ public class NetworkUtil {
                         return chain.proceed(request);
                     }
                 });
-
+        httpClient.followRedirects(false);
         OkHttpClient client = httpClient.build();
         Retrofit retrofit =
                 new Retrofit.Builder()
@@ -83,7 +83,7 @@ public class NetworkUtil {
                         return chain.proceed(request);
                     }
                 });
-
+        httpClient.followRedirects(false);
         OkHttpClient client = httpClient.build();
         Retrofit retrofit =
                 new Retrofit.Builder()

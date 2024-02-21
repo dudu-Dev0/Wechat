@@ -19,19 +19,24 @@ import com.dudu.wechat.api.EmptyApi;
 import com.dudu.wechat.api.LoginApi;
 import com.dudu.wechat.utils.BitmapUtil;
 import com.dudu.wechat.utils.DensityUtil;
+import com.dudu.wechat.utils.HeaderParser;
 import com.dudu.wechat.utils.JavaScriptUtil;
 import com.dudu.wechat.utils.NetworkUtil;
 import com.dudu.wechat.utils.QRCodeUtil;
+import com.dudu.wechat.utils.SharedPreferencesUtil;
 import com.google.android.material.card.MaterialCardView;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import okhttp3.Headers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 
 public class QRCodeLoginActivity extends AppCompatActivity {
     private ImageView qrView;
@@ -106,7 +111,8 @@ public class QRCodeLoginActivity extends AppCompatActivity {
                                                                             JavaScriptUtil
                                                                                     .getString(
                                                                                             responseBody,
-                                                                                            "window.redirect_uri"));
+                                                                                            "window.redirect_uri"),Map.of());
+                                                    
                                                     loginCall.enqueue(
                                                             new Callback<ResponseBody>() {
                                                                 @Override
@@ -120,14 +126,21 @@ public class QRCodeLoginActivity extends AppCompatActivity {
                                                                                             .this,
                                                                                     MainActivity
                                                                                             .class);
-                                                                    try {
-                                                                        String data = loginResponse.body().string();
+                                                                    //try {
+                                                                        String headers = loginResponse.headers().toString();
+                                                                        
+                                                                        SharedPreferencesUtil.putData(SharedPreferencesUtil.AUTH_TICKET,HeaderParser.get(headers,SharedPreferencesUtil.AUTH_TICKET));
+                                                                        SharedPreferencesUtil.putData(SharedPreferencesUtil.LOAD_TIME,HeaderParser.get(headers,SharedPreferencesUtil.LOAD_TIME));
+                                                                        SharedPreferencesUtil.putData(SharedPreferencesUtil.UIN,HeaderParser.get(headers,SharedPreferencesUtil.UIN));
+                                                                        SharedPreferencesUtil.putData(SharedPreferencesUtil.SID,HeaderParser.get(headers,SharedPreferencesUtil.SID));
+                                                                        SharedPreferencesUtil.putData(SharedPreferencesUtil.DATA_TICKET,HeaderParser.get(headers,SharedPreferencesUtil.DATA_TICKET));
+                                                                        //String data = loginResponse.body().string();
                                                                         intent.putExtra(
                                                                                 "data",
-                                                                                data);
-                                                                    } catch (IOException e) {
-                                                                        e.printStackTrace();
-                                                                    }
+                                                                                headers);
+                                                                   // } catch (IOException e) {
+                                                                     //   e.printStackTrace();
+                                                                  //  }
                                                                     startActivity(intent);
                                                                 }
 
