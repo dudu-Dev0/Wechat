@@ -2,7 +2,7 @@
      
     <style
         name="Base.AppTheme"
-        parent="Theme.Material3.Dark.NoActionBar">
+        parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <item name="android:textColor">@color/textColorNormal</item>
         <item name="android:windowBackground">@android:color/black</item>
     </style>

@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:textSize="14sp"
-                    android:textColor="@color/textColorGreen"
+                    android:textColor="@color/globalGreen"
                     android:layout_gravity="center"
                     android:textStyle="bold"
                     android:text="扫码登录" />
@@ -41,7 +41,7 @@
                     <ProgressBar
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:indeterminateTint="@color/buttonColorGreen"
+                        android:indeterminateTint="@color/globalGreen"
                         android:layout_gravity="center" />
                     <com.google.android.material.card.MaterialCardView
                         android:layout_height="120dp"

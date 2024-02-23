@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<manifest 
+<manifest
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <application 
-        android:allowBackup="true" 
-        android:icon="@mipmap/ic_launcher" 
-        android:roundIcon="@mipmap/ic_launcher" 
-        android:label="@string/app_name" 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:name="com.dudu.wechat.Wechat"
-        android:supportsRtl="true" 
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity 
-            android:name=".ui.login.QRCodeLoginActivity" 
+        <activity
+            android:name=".ui.login.QRCodeLoginActivity"
             android:exported="true">
             
         </activity>
-        <activity 
-            android:name="MainActivity" 
+        <activity
+            android:name="MainActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name="testmain" 
+            android:name="testmain"
             android:exported="true">
             <intent-filter>
-                <action 
+                <action
                     android:name="android.intent.action.MAIN" />
-                <category 
+                <category
                     android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

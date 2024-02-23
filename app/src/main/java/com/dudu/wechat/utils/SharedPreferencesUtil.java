@@ -30,7 +30,8 @@ public class SharedPreferencesUtil {
     public static String SID = "wxsid";
     public static String DATA_TICKET = "webwx_data_ticket";
     public static String USER_NAME = "usrname";
-    
+    public static String SCREEN_TYPE = "screen_type";
+    	
  
     private SharedPreferencesUtil(Context context, String name) {
         sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);

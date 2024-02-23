@@ -17,6 +17,7 @@ import com.dudu.wechat.MainActivity;
 import com.dudu.wechat.R;
 import com.dudu.wechat.api.EmptyApi;
 import com.dudu.wechat.api.LoginApi;
+import com.dudu.wechat.ui.BaseActivity;
 import com.dudu.wechat.utils.BitmapUtil;
 import com.dudu.wechat.utils.DensityUtil;
 import com.dudu.wechat.utils.HeaderParser;
@@ -38,7 +39,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 
-public class QRCodeLoginActivity extends AppCompatActivity {
+public class QRCodeLoginActivity extends BaseActivity {
     private ImageView qrView;
     private MaterialCardView qrCard;
     private TextView tipTv;
@@ -47,9 +48,17 @@ public class QRCodeLoginActivity extends AppCompatActivity {
     private String uuid = "";
 
     @Override
+    protected void setRoundContentView() {
+    	setContentView(R.layout.activity_qr_code_login_round);
+    }
+    @Override
+    protected void setSquareContentView() {
+    	setContentView(R.layout.activity_qr_code_login);
+    }
+    
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qr_code_login);
 
         qrView = (ImageView) findViewById(R.id.qr_code_view);
         qrCard = (MaterialCardView) findViewById(R.id.qr_code_card);
@@ -101,6 +110,8 @@ public class QRCodeLoginActivity extends AppCompatActivity {
                                                         scheduledExecutorService.shutdown();
                                                         scheduledExecutorService = null;
                                                     }
+                                                    titleTv.setText("正在登录...");
+                                                    tipTv.setText("加载数据中");
                                                     Log.e("direct",JavaScriptUtil
                                                                                     .getString(
                                                                                             responseBody,
@@ -150,6 +161,7 @@ public class QRCodeLoginActivity extends AppCompatActivity {
                                                                         Throwable t) {
                                                                     // 处理请求失败的情况
                                                                     Log.e("fail", t.toString());
+                                                                    Toast.makeText(QRCodeLoginActivity.this,"登录失败,请重试",Toast.LENGTH_LONG).show();
                                                                 }
                                                             });
                                                     break;
