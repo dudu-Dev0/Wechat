@@ -22,7 +22,7 @@ public class BaseActivity extends AppCompatActivity {
             else setSquareContentView();
         }
         if (screenType.equals("round")) setRoundContentView();
-        if (screenType.equals("square")) setRoundContentView();
+        if (screenType.equals("square")) setSquareContentView();
     }
 
     protected void setSquareContentView() {}

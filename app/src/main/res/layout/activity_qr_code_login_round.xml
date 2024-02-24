@@ -9,10 +9,13 @@
     <com.dudu.wechat.widget.CurvedTextClock
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:textSize="16sp"/>
+        android:textSize="12sp"
+        android:textStyle="bold"/>
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:scrollbars="none">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent">
@@ -44,8 +47,8 @@
                         android:indeterminateTint="@color/globalGreen"
                         android:layout_gravity="center" />
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_height="120dp"
-                        android:layout_width="120dp"
+                        android:layout_height="160dp"
+                        android:layout_width="160dp"
                         android:visibility="invisible"
                         app:strokeColor="#00000000"
                         app:cardBackgroundColor="#00000000"

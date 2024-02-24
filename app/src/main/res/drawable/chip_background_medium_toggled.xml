@@ -4,11 +4,10 @@
     android:shape="rectangle">
 
     <gradient
-        android:angle="90"
-        android:endColor="@android:color/black"
-        android:startColor="@color/cardBackgroundColorGreen" />
+        android:angle="45"
+        android:endColor="@color/cardBackgroundColorGreen"
+        android:startColor="@color/cardBackgroundColorNormal" />
     <corners
-        android:topLeftRadius="8dp"
-        android:topRightRadius="8dp" />
+        android:radius="60dp"/>
 
 </shape>
