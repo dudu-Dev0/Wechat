@@ -47,8 +47,8 @@
                         android:indeterminateTint="@color/globalGreen"
                         android:layout_gravity="center" />
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_height="160dp"
-                        android:layout_width="160dp"
+                        android:layout_height="140dp"
+                        android:layout_width="140dp"
                         android:visibility="invisible"
                         app:strokeColor="#00000000"
                         app:cardBackgroundColor="#00000000"

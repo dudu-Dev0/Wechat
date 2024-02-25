@@ -48,12 +48,12 @@
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:layout_height="60dp"
+                    android:layout_height="52dp"
                     android:layout_width="match_parent"
-                    android:layout_marginVertical="4dp"
+                    android:layout_marginVertical="2dp"
+                    android:layout_marginHorizontal="2dp"
                     android:background="@drawable/chip_background_medium"
                     android:clickable="true"
-                    android:layout_marginHorizontal="12dp"
                     android:id="@+id/square_screen_card">
 
                     <TextView
@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_marginStart="14dp"
                         android:layout_marginVertical="6dp"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         android:text="矩形屏幕"
                         android:layout_gravity="center|start" />
 
@@ -77,12 +77,12 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:layout_height="60dp"
+                    android:layout_height="52dp"
                     android:layout_width="match_parent"
-                    android:layout_marginVertical="4dp"
+                    android:layout_marginVertical="2dp"
+                    android:layout_marginHorizontal="2dp"
                     android:background="@drawable/chip_background_medium"
                     android:clickable="true"
-                    android:layout_marginHorizontal="8dp"
                     android:id="@+id/round_screen_card">
 
                     <TextView
@@ -90,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_marginStart="14dp"
                         android:layout_marginVertical="6dp"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         android:text="圆形屏幕"
                         android:layout_gravity="center|start" />
 
@@ -108,8 +108,8 @@
             </LinearLayout>
 
             <ImageButton
-                android:layout_height="60dp"
-                android:layout_width="60dp"
+                android:layout_height="52dp"
+                android:layout_width="52dp"
                 android:src="@drawable/icon_done"
                 android:background="@drawable/round_button_green"
                 android:id="@+id/done_btn"

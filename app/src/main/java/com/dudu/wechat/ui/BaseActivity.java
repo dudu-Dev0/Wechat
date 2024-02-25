@@ -1,9 +1,11 @@
 package com.dudu.wechat.ui;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import com.dudu.wechat.Wechat;
 import com.dudu.wechat.utils.SharedPreferencesUtil;
 
 public class BaseActivity extends AppCompatActivity {
@@ -23,6 +25,12 @@ public class BaseActivity extends AppCompatActivity {
         }
         if (screenType.equals("round")) setRoundContentView();
         if (screenType.equals("square")) setSquareContentView();
+    }
+    //自动适配屏幕
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = Wechat.getFitDisplayContext(newBase);
+        super.attachBaseContext(newBase);
     }
 
     protected void setSquareContentView() {}

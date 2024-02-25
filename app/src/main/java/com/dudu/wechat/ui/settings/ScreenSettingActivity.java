@@ -8,9 +8,10 @@ import android.widget.RadioButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import com.dudu.wechat.R;
+import com.dudu.wechat.ui.BaseActivity;
 import com.dudu.wechat.utils.SharedPreferencesUtil;
 
-public class ScreenSettingActivity extends AppCompatActivity {
+public class ScreenSettingActivity extends BaseActivity {
     FrameLayout roundCard, squareCard;
     RadioButton roundRadio, squareRadio;
     ImageButton btn;
