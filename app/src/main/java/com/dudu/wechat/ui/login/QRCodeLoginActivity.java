@@ -46,20 +46,11 @@ public class QRCodeLoginActivity extends BaseActivity {
     private TextView titleTv;
     private ScheduledExecutorService scheduledExecutorService;
     private String uuid = "";
-
-    @Override
-    protected void setRoundContentView() {
-    	setContentView(R.layout.activity_qr_code_login_round);
-    }
-    @Override
-    protected void setSquareContentView() {
-    	setContentView(R.layout.activity_qr_code_login);
-    }
-    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentLayout("activity_qr_code_login");
+        
         qrView = (ImageView) findViewById(R.id.qr_code_view);
         qrCard = (MaterialCardView) findViewById(R.id.qr_code_card);
         tipTv = (TextView) findViewById(R.id.login_tip_tv);
