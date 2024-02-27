@@ -25,7 +25,7 @@ public class BaseActivity extends AppCompatActivity {
     public void setContentLayout(String layoutName) {
 
         // 由于某些nt厂商 圆屏表用方屏表的设置 导致layout_round无效 故出此下策
-        // 检测圆方屏并自动选取view加载，需重写setSquareContentView和setRoundContentView两个方法
+        // 检测圆方屏并自动选取view加载
         try {
             //通过反射自动获取资源id
             int squareLayout = R.layout.class.getField(layoutName).getInt(layoutName);
