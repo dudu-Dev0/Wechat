@@ -1,42 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@android:color/black"
     android:orientation="vertical">
-    <com.dudu.wechat.widget.CurvedTextClock
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:textSize="12sp"
-        android:textStyle="bold"/>
     <ScrollView
         android:id="@+id/scroll_view"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:scrollbars="none">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/title_layout">
+        <LinearLayout
             android:layout_height="match_parent"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/box"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="20dp"
                 android:orientation="vertical">
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/globalGreen"
-                    android:layout_gravity="center"
-                    android:textStyle="bold"
-                    android:text="扫码登录" />
                 <FrameLayout
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -47,8 +32,8 @@
                         android:indeterminateTint="@color/globalGreen"
                         android:layout_gravity="center" />
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_height="140dp"
-                        android:layout_width="140dp"
+                        android:layout_height="120dp"
+                        android:layout_width="120dp"
                         android:visibility="invisible"
                         app:strokeColor="#00000000"
                         app:cardBackgroundColor="#00000000"
@@ -71,14 +56,39 @@
                 android:id="@+id/login_tip_tv"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
-                android:textSize="14sp"
+                android:layout_marginBottom="100dp"
+                android:textSize="8sp"
                 android:textColor="@color/textColorDarker"
-                android:text="请使用手机\n微信扫码登录"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/box" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:text="请使用手机\n微信扫码登录" />
+        </LinearLayout>
     </ScrollView>
-</FrameLayout>
+
+    <com.dudu.wechat.widget.CurvedTextClock
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="8sp"
+        android:textStyle="bold" />
+    <FrameLayout
+        
+                    android:id="@+id/title_layout"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/title"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="8sp"
+            android:textColor="@color/globalGreen"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:text="扫码登录"
+            android:layout_marginBottom="10dp" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

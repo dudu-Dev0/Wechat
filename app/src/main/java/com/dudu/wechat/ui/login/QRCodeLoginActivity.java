@@ -225,8 +225,8 @@ public class QRCodeLoginActivity extends BaseActivity {
     private void refreshQRCode() {
         tipTv.setText("请使用手机微信扫码登录");
         titleTv.setText("扫码登录");
-        qrCard.getLayoutParams().height = DensityUtil.dip2px(QRCodeLoginActivity.this, 140);
-        qrCard.getLayoutParams().width = DensityUtil.dip2px(QRCodeLoginActivity.this, 140);
+        qrCard.getLayoutParams().height = DensityUtil.dip2px(QRCodeLoginActivity.this, 120);
+        qrCard.getLayoutParams().width = DensityUtil.dip2px(QRCodeLoginActivity.this, 120);
         Call<ResponseBody> call =
                 NetworkUtil.createLogin(LoginApi.class, NetworkUtil.LOGIN_BASE_URL)
                         .getUuid(System.currentTimeMillis());
