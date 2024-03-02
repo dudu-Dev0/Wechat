@@ -19,8 +19,12 @@ public class ScreenSettingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_screen_setting);
-        
+        setContentLayout("activity_screen_setting");
+
+        init();
+    }
+
+    protected void init() {
         roundCard = (FrameLayout) findViewById(R.id.round_screen_card);
         roundRadio = (RadioButton) findViewById(R.id.round_screen_radio);
         squareCard = (FrameLayout) findViewById(R.id.square_screen_card);
@@ -68,6 +72,8 @@ public class ScreenSettingActivity extends BaseActivity {
                     if (roundRadio.isChecked())
                         SharedPreferencesUtil.putData(SharedPreferencesUtil.SCREEN_TYPE, "round");
                     else SharedPreferencesUtil.putData(SharedPreferencesUtil.SCREEN_TYPE, "square");
+                    setContentLayout("activity_screen_setting");
+                    init();
                 });
     }
 }

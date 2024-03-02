@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/title_layout">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="10dp">
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_height="52dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginVertical="2dp"
+                    android:layout_marginHorizontal="2dp"
+                    android:background="@drawable/chip_background_medium"
+                    android:clickable="true"
+                    android:id="@+id/square_screen_card">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginVertical="6dp"
+                        android:textSize="10sp"
+                        android:text="矩形屏幕"
+                        android:layout_gravity="center|start" />
+
+                    <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:id="@+id/square_screen_radio"
+                        android:layout_gravity="center|end"
+                        android:text=""
+                        android:clickable="false" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_height="52dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginVertical="2dp"
+                    android:layout_marginHorizontal="2dp"
+                    android:background="@drawable/chip_background_medium"
+                    android:clickable="true"
+                    android:id="@+id/round_screen_card">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginVertical="6dp"
+                        android:textSize="10sp"
+                        android:text="圆形屏幕"
+                        android:layout_gravity="center|start" />
+
+                    <RadioButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginEnd="14dp"
+                        android:id="@+id/round_screen_radio"
+                        android:layout_gravity="center|end"
+                        android:text=""
+                        android:clickable="false" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <ImageButton
+                android:layout_height="52dp"
+                android:layout_width="52dp"
+                android:src="@drawable/icon_done"
+                android:background="@drawable/round_button_green"
+                android:id="@+id/done_btn"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="80dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.dudu.wechat.widget.CurvedTextClock
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="8sp"
+        android:textStyle="bold" />
+    <FrameLayout
+        android:id="@+id/title_layout"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/title"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="8sp"
+            android:textColor="@color/globalGreen"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:text="屏幕类型"
+            android:layout_marginBottom="8dp" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
