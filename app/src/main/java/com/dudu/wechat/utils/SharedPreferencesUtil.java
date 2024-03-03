@@ -3,6 +3,7 @@ package com.dudu.wechat.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import com.dudu.wechat.synckey.model.BaseSyncKey;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -31,6 +32,7 @@ public class SharedPreferencesUtil {
     public static String DATA_TICKET = "webwx_data_ticket";
     public static String USER_NAME = "usrname";
     public static String SCREEN_TYPE = "screen_type";
+    public static String SYNC_KET = "sync_key";
     	
  
     private SharedPreferencesUtil(Context context, String name) {
@@ -254,5 +256,19 @@ public class SharedPreferencesUtil {
         }
         Log.e("SharedPreferencesUtil", obj.toString());
         return map;
+    }
+    
+    public static String getSkeyOfStr() {
+        StringBuilder synckey = new StringBuilder();
+        List<BaseSyncKey> keyList =
+                SharedPreferencesUtil.getListData(
+                        SharedPreferencesUtil.SYNC_KET, BaseSyncKey.class);
+        for (int i = 0, l; i < keyList.size(); i++) {
+            if (i != 0) {
+                synckey.append("|");
+            }
+            synckey.append(keyList.get(i).Key + "_" + keyList.get(i).Val);
+        }
+        return synckey.toString();
     }
 }

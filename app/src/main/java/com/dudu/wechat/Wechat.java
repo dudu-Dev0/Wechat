@@ -41,4 +41,5 @@ public class Wechat extends Application {
         }
         return newContext;
     }
+    
 }
