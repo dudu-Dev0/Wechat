@@ -1,12 +1,11 @@
 
 plugins {
     id("com.android.application")
-    
 }
 
 android {
     namespace = "com.dudu.wechat"
-    compileSdk = 33
+    compileSdk = 34
     defaultConfig {
         applicationId = "com.dudu.wechat"
         minSdk = 23
@@ -23,8 +22,8 @@ android {
         lintConfig = file("$rootDir/glidelint.xml")
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildTypes {
@@ -56,6 +55,6 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.13.2")
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
     //Room
-    implementation("androidx.room:room-runtime:2.2.6")
-    annotationProcessor("androidx.room:room-compiler:2.2.6")
+    implementation("androidx.room:room-runtime:2.6.0")
+    annotationProcessor("androidx.room:room-compiler:2.6.0")
 }

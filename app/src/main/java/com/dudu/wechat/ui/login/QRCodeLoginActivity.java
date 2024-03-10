@@ -15,8 +15,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.dudu.wechat.MainActivity;
 import com.dudu.wechat.R;
+import com.dudu.wechat.api.ContactApi;
 import com.dudu.wechat.api.EmptyApi;
 import com.dudu.wechat.api.LoginApi;
+import com.dudu.wechat.model.User;
+import com.dudu.wechat.model.request.InitClientRequest;
+import com.dudu.wechat.model.response.InitResponse;
 import com.dudu.wechat.ui.BaseActivity;
 import com.dudu.wechat.utils.BitmapUtil;
 import com.dudu.wechat.utils.DensityUtil;
@@ -27,6 +31,7 @@ import com.dudu.wechat.utils.QRCodeUtil;
 import com.dudu.wechat.utils.SharedPreferencesUtil;
 import com.google.android.material.card.MaterialCardView;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -38,7 +43,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-
 public class QRCodeLoginActivity extends BaseActivity {
     private ImageView qrView;
     private MaterialCardView qrCard;
@@ -46,29 +50,34 @@ public class QRCodeLoginActivity extends BaseActivity {
     private TextView titleTv;
     private ScheduledExecutorService scheduledExecutorService;
     private String uuid = "";
+    private boolean isLogin = false;
+    private boolean isRequesting = false;
+    private Thread mThread;
+
+    // forTest
+    String a = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentLayout("activity_qr_code_login");
-        
+
         qrView = (ImageView) findViewById(R.id.qr_code_view);
         qrCard = (MaterialCardView) findViewById(R.id.qr_code_card);
         tipTv = (TextView) findViewById(R.id.login_tip_tv);
         titleTv = (TextView) findViewById(R.id.title);
 
         refreshQRCode();
-
-        scheduledExecutorService = Executors.newScheduledThreadPool(1);
-        Runnable task =
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!uuid.equals("")) {
-                            waitForScan();
-                        }
-                    }
-                };
-        scheduledExecutorService.scheduleAtFixedRate(task, 5, 5, TimeUnit.SECONDS);
+        mThread = new Thread(()->{
+            while(!isLogin) {
+                if(isLogin) break;
+                if (!uuid.equals("")&&!isRequesting) {
+                    isRequesting = true;
+                    waitForScan();
+                }
+            }
+        });
+        mThread.start();
 
         ((ImageView) findViewById(R.id.qr_code_view))
                 .setOnClickListener(
@@ -91,30 +100,31 @@ public class QRCodeLoginActivity extends BaseActivity {
                         try {
                             String responseBody = response.body().string();
                             Log.e("resp", responseBody);
+                            isRequesting = false;
                             if (response.isSuccessful()) {
                                 runOnUiThread(
                                         () -> {
                                             switch (JavaScriptUtil.getInt(
                                                     responseBody, "window.code")) {
                                                 case 200:
-                                                    if (scheduledExecutorService != null) {
-                                                        scheduledExecutorService.shutdown();
-                                                        scheduledExecutorService = null;
-                                                    }
+                                                    isLogin = true;
                                                     titleTv.setText("正在登录...");
                                                     tipTv.setText("加载数据中");
-                                                    Log.e("direct",JavaScriptUtil
-                                                                                    .getString(
-                                                                                            responseBody,
-                                                                                            "window.redirect_uri"));
+                                                    Log.e(
+                                                            "direct",
+                                                            JavaScriptUtil.getString(
+                                                                    responseBody,
+                                                                    "window.redirect_uri"));
                                                     Call<ResponseBody> loginCall =
                                                             NetworkUtil.create(EmptyApi.class)
                                                                     .get(
                                                                             JavaScriptUtil
-                                                                                    .getString(
-                                                                                            responseBody,
-                                                                                            "window.redirect_uri"),Map.of());
-                                                    
+                                                                                            .getString(
+                                                                                                    responseBody,
+                                                                                                    "window.redirect_uri")
+                                                                                    + "&fun=new&version=v2&mod=desktop",
+                                                                            Map.of());
+
                                                     loginCall.enqueue(
                                                             new Callback<ResponseBody>() {
                                                                 @Override
@@ -128,22 +138,50 @@ public class QRCodeLoginActivity extends BaseActivity {
                                                                                             .this,
                                                                                     MainActivity
                                                                                             .class);
-                                                                    //try {
-                                                                        String headers = loginResponse.headers().toString();
+                                                                    try {
+                                                                        String headers =
+                                                                                loginResponse
+                                                                                        .headers()
+                                                                                        .toString();
+                                                                        String body =
+                                                                                loginResponse
+                                                                                        .body()
+                                                                                        .string();
+                                                                        Log.e("", body);
                                                                         
+                                                                        String passTicket = body.substring(body.indexOf("<pass_ticket>")+13,body.indexOf("</pass_ticket>"));
+                                                                        String skey = body.substring(body.indexOf("<skey>")+6,body.indexOf("</skey>"));
                                                                         SharedPreferencesUtil.putData(SharedPreferencesUtil.AUTH_TICKET,HeaderParser.get(headers,SharedPreferencesUtil.AUTH_TICKET));
                                                                         SharedPreferencesUtil.putData(SharedPreferencesUtil.LOAD_TIME,HeaderParser.get(headers,SharedPreferencesUtil.LOAD_TIME));
-                                                                        SharedPreferencesUtil.putData(SharedPreferencesUtil.UIN,HeaderParser.get(headers,SharedPreferencesUtil.UIN));
+                                                                        SharedPreferencesUtil.putData(SharedPreferencesUtil.UIN,Long.valueOf(HeaderParser.get(headers,SharedPreferencesUtil.UIN)));
                                                                         SharedPreferencesUtil.putData(SharedPreferencesUtil.SID,HeaderParser.get(headers,SharedPreferencesUtil.SID));
                                                                         SharedPreferencesUtil.putData(SharedPreferencesUtil.DATA_TICKET,HeaderParser.get(headers,SharedPreferencesUtil.DATA_TICKET));
+                                                                        SharedPreferencesUtil.putData(SharedPreferencesUtil.PASS_TICKET,passTicket);
+                                                                        SharedPreferencesUtil.putData(SharedPreferencesUtil.SKEY,skey);
                                                                         //String data = loginResponse.body().string();
-                                                                        intent.putExtra(
-                                                                                "data",
-                                                                                headers);
-                                                                   // } catch (IOException e) {
-                                                                     //   e.printStackTrace();
-                                                                  //  }
-                                                                    startActivity(intent);
+                                                                        InitClientRequest reqBody = new InitClientRequest();
+                                                                        reqBody.BaseRequest = NetworkUtil.buildBaseRequest();
+                                                                        Call<InitResponse> initCall = NetworkUtil.create(ContactApi.class).initClient(passTicket,reqBody);
+
+                                                                        initCall.enqueue(new Callback<InitResponse>() {
+                                                                            @Override
+                                                                            public void onResponse(Call<InitResponse> call,Response<InitResponse> initResponse) {
+                                                                                ArrayList<User> list = initResponse.body().ContactList;
+                                                                                for(User usr: list){
+                                                                                    Log.e("usr",usr.NickName);
+                                                                                    a+=usr.NickName;
+                                                                                }
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onFailure(Call<InitResponse> call,Throwable t) {
+                                                                                t.printStackTrace();
+                                                                            }
+                                                                        });
+
+                                                                    } catch (IOException e) {
+                                                                        e.printStackTrace();
+                                                                    }
                                                                 }
 
                                                                 @Override
@@ -152,7 +190,13 @@ public class QRCodeLoginActivity extends BaseActivity {
                                                                         Throwable t) {
                                                                     // 处理请求失败的情况
                                                                     Log.e("fail", t.toString());
-                                                                    Toast.makeText(QRCodeLoginActivity.this,"登录失败,请重试",Toast.LENGTH_LONG).show();
+                                                                    Toast.makeText(
+                                                                                    QRCodeLoginActivity
+                                                                                            .this,
+                                                                                    "登录失败,请重试",
+                                                                                    Toast
+                                                                                            .LENGTH_LONG)
+                                                                            .show();
                                                                 }
                                                             });
                                                     break;
@@ -218,6 +262,7 @@ public class QRCodeLoginActivity extends BaseActivity {
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         // 处理请求失败的情况
                         Log.e("fail", t.toString());
+                        isRequesting = false;
                     }
                 });
     }

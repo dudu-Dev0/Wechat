@@ -33,6 +33,9 @@ public class SharedPreferencesUtil {
     public static String USER_NAME = "usrname";
     public static String SCREEN_TYPE = "screen_type";
     public static String SYNC_KET = "sync_key";
+    public static String PASS_TICKET = "pass_ticket";
+    public static String SKEY = "skey";
+    
     	
  
     private SharedPreferencesUtil(Context context, String name) {

@@ -1,6 +1,8 @@
 package com.dudu.wechat.utils;
 
+import com.dudu.wechat.model.BaseRequest;
 import com.dudu.wechat.synckey.model.BaseSyncKey;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +50,7 @@ public class NetworkUtil {
                         + "wxloadtime="
                         + SharedPreferencesUtil.getData(SharedPreferencesUtil.LOAD_TIME, "")
                         + "wxuin="
-                        + SharedPreferencesUtil.getData(SharedPreferencesUtil.UIN, "")
+                        + SharedPreferencesUtil.getData(SharedPreferencesUtil.UIN, 0L)
                         + "wxsid="
                         + SharedPreferencesUtil.getData(SharedPreferencesUtil.SID, "")
                         + "webwx_data_ticket="
@@ -74,7 +76,7 @@ public class NetworkUtil {
                         return chain.proceed(request);
                     }
                 });
-        httpClient.followRedirects(false);
+        //httpClient.followRedirects(false);
         OkHttpClient client = httpClient.build();
         Retrofit retrofit =
                 new Retrofit.Builder()
@@ -112,5 +114,8 @@ public class NetworkUtil {
     
     public static <T> T createSync(Class<T> t) {
         return retrofitWx(SYNC_BASE_URL).create(t);
+    }
+    public static BaseRequest buildBaseRequest() {
+        return new BaseRequest((Long)SharedPreferencesUtil.getData(SharedPreferencesUtil.UIN,0L),(String)SharedPreferencesUtil.getData(SharedPreferencesUtil.SID,""),(String)SharedPreferencesUtil.getData(SharedPreferencesUtil.SKEY,""));
     }
 }

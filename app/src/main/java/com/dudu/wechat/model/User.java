@@ -3,9 +3,11 @@ package com.dudu.wechat.model;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+import com.dudu.wechat.model.converter.UserListConverter;
 import java.util.ArrayList;
 
-@Entity
+@Entity(tableName = "contacts")
 public class User {
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -20,6 +22,7 @@ public class User {
     public String Province;
     public String City;
     public String Signature;
+    @TypeConverters({UserListConverter.class})
     public ArrayList<User> MemberList;
     public int MemberCount;
     public int IsOwner; // 自己的群？0不是或非群聊
