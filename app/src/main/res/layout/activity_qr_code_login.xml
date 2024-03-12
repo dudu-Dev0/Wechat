@@ -30,14 +30,17 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_gravity="center">
-        <ProgressBar
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:indeterminateTint="@color/globalGreen"
-            android:layout_gravity="center" />
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:layout_height="70dp"
+            android:layout_width="70dp"
+            app:cpb_progressbar_color="@color/globalGreen"
+            app:cpb_indeterminate_mode="true"
+            android:layout_gravity="center" 
+            app:cpb_round_border="true"
+            app:cpb_background_progressbar_color="#00000000"/>
         <com.google.android.material.card.MaterialCardView
-            android:layout_height="140dp"
-            android:layout_width="140dp"
+            android:layout_height="120dp"
+            android:layout_width="120dp"
             android:visibility="invisible"
             app:strokeColor="#00000000"
             app:cardBackgroundColor="#00000000"

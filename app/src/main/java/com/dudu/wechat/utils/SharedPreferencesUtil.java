@@ -31,6 +31,8 @@ public class SharedPreferencesUtil {
     public static String SID = "wxsid";
     public static String DATA_TICKET = "webwx_data_ticket";
     public static String USER_NAME = "usrname";
+    public static String NICK_NAME = "nick_name";
+    public static String USER_AVATAR = "avatar";
     public static String SCREEN_TYPE = "screen_type";
     public static String SYNC_KET = "sync_key";
     public static String PASS_TICKET = "pass_ticket";

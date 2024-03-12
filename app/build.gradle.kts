@@ -44,6 +44,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
+    implementation("com.mikhaellopez:circularprogressbar:3.1.0")
     // Standard Wear OS libraries
     implementation("androidx.wear:wear:1.3.0")
     //retrofit

@@ -166,11 +166,10 @@ public class QRCodeLoginActivity extends BaseActivity {
                                                                         initCall.enqueue(new Callback<InitResponse>() {
                                                                             @Override
                                                                             public void onResponse(Call<InitResponse> call,Response<InitResponse> initResponse) {
-                                                                                ArrayList<User> list = initResponse.body().ContactList;
-                                                                                for(User usr: list){
-                                                                                    Log.e("usr",usr.NickName);
-                                                                                    a+=usr.NickName;
-                                                                                }
+                                                                                User self = initResponse.body().User;
+                                                                                SharedPreferencesUtil.putData(SharedPreferencesUtil.USER_NAME,self.UserName);
+                                                                                SharedPreferencesUtil.putData(SharedPreferencesUtil.NICK_NAME,self.NickName);
+                                                                                SharedPreferencesUtil.putData(SharedPreferencesUtil.USER_AVATAR,NetworkUtil.MAIN_BASE_URL+self.HeadImgUrl);
                                                                             }
 
                                                                             @Override
