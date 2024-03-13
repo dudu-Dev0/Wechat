@@ -1,14 +1,12 @@
 package com.dudu.wechat.model;
+import com.dudu.wechat.utils.SharedPreferencesUtil;
 import java.util.Random;
 
 public class BaseRequest {
-    public long Uin;
-    public String Sid;
-    public String Skey;
+    public long Uin = (Long)SharedPreferencesUtil.getData(SharedPreferencesUtil.UIN,0L);
+    public String Sid = (String)SharedPreferencesUtil.getData(SharedPreferencesUtil.SID,"");
+    public String Skey = (String)SharedPreferencesUtil.getData(SharedPreferencesUtil.SKEY,"");
     public String DeviceID= "e" + Math.abs((new Random()).nextLong() % 100000000000000L);
-    public BaseRequest(long Uin,String Sid,String Skey){
-        this.Uin = Uin;
-        this.Sid = Sid;
-        this.Skey = Skey;
+    public BaseRequest(){;
     }
 }

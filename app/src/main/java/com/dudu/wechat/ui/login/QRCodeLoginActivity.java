@@ -10,16 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.dudu.wechat.MainActivity;
 import com.dudu.wechat.R;
+import com.dudu.wechat.WechatDatabase;
 import com.dudu.wechat.api.ContactApi;
 import com.dudu.wechat.api.EmptyApi;
 import com.dudu.wechat.api.LoginApi;
+import com.dudu.wechat.dao.ContactDao;
 import com.dudu.wechat.model.User;
 import com.dudu.wechat.model.request.InitClientRequest;
+import com.dudu.wechat.model.response.GetContactsResponse;
 import com.dudu.wechat.model.response.InitResponse;
 import com.dudu.wechat.ui.BaseActivity;
 import com.dudu.wechat.utils.BitmapUtil;
@@ -160,7 +164,6 @@ public class QRCodeLoginActivity extends BaseActivity {
                                                                         SharedPreferencesUtil.putData(SharedPreferencesUtil.SKEY,skey);
                                                                         //String data = loginResponse.body().string();
                                                                         InitClientRequest reqBody = new InitClientRequest();
-                                                                        reqBody.BaseRequest = NetworkUtil.buildBaseRequest();
                                                                         Call<InitResponse> initCall = NetworkUtil.create(ContactApi.class).initClient(passTicket,reqBody);
 
                                                                         initCall.enqueue(new Callback<InitResponse>() {
@@ -170,6 +173,27 @@ public class QRCodeLoginActivity extends BaseActivity {
                                                                                 SharedPreferencesUtil.putData(SharedPreferencesUtil.USER_NAME,self.UserName);
                                                                                 SharedPreferencesUtil.putData(SharedPreferencesUtil.NICK_NAME,self.NickName);
                                                                                 SharedPreferencesUtil.putData(SharedPreferencesUtil.USER_AVATAR,NetworkUtil.MAIN_BASE_URL+self.HeadImgUrl);
+                                                                                Call<GetContactsResponse> getContactsCall = NetworkUtil.create(ContactApi.class).getContacts((String)SharedPreferencesUtil.getData(SharedPreferencesUtil.PASS_TICKET,""),(String)SharedPreferencesUtil.getData(SharedPreferencesUtil.SKEY,""));
+                                                                                getContactsCall.enqueue( new Callback<GetContactsResponse>() {
+                                                                                    @Override
+                                                                                    public void onResponse(
+                                                                                        Call<GetContactsResponse> call,
+                                                                                        Response<GetContactsResponse>
+                                                                                        contactsResponse) {
+                                                                                            Log.e("","存储好友");
+                                                                                            ArrayList<User> contactsList = contactsResponse.body().MemberList;
+                                                                                            WechatDatabase db = Room.databaseBuilder(QRCodeLoginActivity.this,WechatDatabase.class,"wechat").build();
+                                                                                            ContactDao dao = db.getContactsDao();
+                                                                                            for(User u : contactsList){
+                                                                                                dao.insert(u);
+                                                                                                Log.e("插入",u.NickName);
+                                                                                            }
+                                                                                        }
+                                                                                    @Override
+                                                                                    public void onFailure(Call<GetContactsResponse> call,Throwable t) {
+                                                                                        t.printStackTrace();
+                                                                                    }
+                                                                                });
                                                                             }
 
                                                                             @Override

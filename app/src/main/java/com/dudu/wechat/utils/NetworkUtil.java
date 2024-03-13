@@ -115,7 +115,4 @@ public class NetworkUtil {
     public static <T> T createSync(Class<T> t) {
         return retrofitWx(SYNC_BASE_URL).create(t);
     }
-    public static BaseRequest buildBaseRequest() {
-        return new BaseRequest((Long)SharedPreferencesUtil.getData(SharedPreferencesUtil.UIN,0L),(String)SharedPreferencesUtil.getData(SharedPreferencesUtil.SID,""),(String)SharedPreferencesUtil.getData(SharedPreferencesUtil.SKEY,""));
-    }
 }

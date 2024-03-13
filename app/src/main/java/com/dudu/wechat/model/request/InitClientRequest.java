@@ -3,5 +3,5 @@ import com.dudu.wechat.model.BaseRequest;
 import com.dudu.wechat.utils.NetworkUtil;
 
 public class InitClientRequest {
-    public BaseRequest BaseRequest = NetworkUtil.buildBaseRequest();
+    public BaseRequest BaseRequest = new BaseRequest();
 }

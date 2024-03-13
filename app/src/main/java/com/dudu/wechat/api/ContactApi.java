@@ -1,4 +1,5 @@
 package com.dudu.wechat.api;
+
 import com.dudu.wechat.model.request.InitClientRequest;
 import com.dudu.wechat.model.request.StatusNotifyRequest;
 import com.dudu.wechat.model.response.GetContactsResponse;
@@ -20,4 +21,7 @@ public interface ContactApi {
     
     @GET("cgi-bin/mmwebwx-bin/webwxgetcontact?seq=0")
     Call<GetContactsResponse> getContacts(@Query("pass_ticket")String passTicket,@Query("skey")String skey);
+    
+    @POST("cgi-bin/mmwebwx-bin/webwxbatchgetcontact?type=ex")
+    Call<ResponseBody> batchGetContact();
 }

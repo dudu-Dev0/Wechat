@@ -45,6 +45,6 @@ public abstract class WechatDatabase extends RoomDatabase{
                 .build();
     }
 
-    abstract ContactDao getContactsDao();
+    public abstract ContactDao getContactsDao();
 }
 
