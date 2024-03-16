@@ -28,8 +28,8 @@ public class NetworkUtil {
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0");
         headers.put(
                 "Cookie",
-                "webwxuvid=e7dbee8941b573cc0f7a5941f41e05f630b450d4a4c1c6e96b572706b9c768118943f33bf4a34aac68fec1e499845d5c; "
-                        + "webwx_auth_ticket=CIsBEKXWuuQJGoABEyPuKQKLv97+rehYLeBZt8l8qX6T30w9Yh/cig4m0d2GdiUdpZWSn45oFjnJSw+4CbPoUkvduj/ACp4EjRknN8/q5I7B5Xc1YuDwhyb86+RGe+dbuYaltRayxCNKAzawKsV+B4eXANBj3azhCxKo9GDBlobdnAUAr8mrFTBuslI=");
+                "webwxuvid=e7dbee8941b573cc0f7a5941f41e05f630b450d4a4c1c6e96b572706b9c768118943f33bf4a34aac68fec1e499845d5c"
+                        + "; webwx_auth_ticket=CIsBEKXWuuQJGoABEyPuKQKLv97+rehYLeBZt8l8qX6T30w9Yh/cig4m0d2GdiUdpZWSn45oFjnJSw+4CbPoUkvduj/ACp4EjRknN8/q5I7B5Xc1YuDwhyb86+RGe+dbuYaltRayxCNKAzawKsV+B4eXANBj3azhCxKo9GDBlobdnAUAr8mrFTBuslI=");
         return headers;
     }
 
@@ -44,16 +44,16 @@ public class NetworkUtil {
         headers.put("client-version", "2.0.0");
         headers.put(
                 "Cookie",
-                "webwxuvid=e7dbee8941b573cc0f7a5941f41e05f630b450d4a4c1c6e96b572706b9c768118943f33bf4a34aac68fec1e499845d5c; "
-                        + "webwx_auth_ticket="
+                "webwxuvid=e7dbee8941b573cc0f7a5941f41e05f630b450d4a4c1c6e96b572706b9c768118943f33bf4a34aac68fec1e499845d5c"
+                        + ";webwx_auth_ticket="
                         + SharedPreferencesUtil.getData(SharedPreferencesUtil.AUTH_TICKET, "")
-                        + "wxloadtime="
+                        + ";wxloadtime="
                         + SharedPreferencesUtil.getData(SharedPreferencesUtil.LOAD_TIME, "")
-                        + "wxuin="
+                        + ";wxuin="
                         + SharedPreferencesUtil.getData(SharedPreferencesUtil.UIN, 0L)
-                        + "wxsid="
+                        + ";wxsid="
                         + SharedPreferencesUtil.getData(SharedPreferencesUtil.SID, "")
-                        + "webwx_data_ticket="
+                        + ";webwx_data_ticket="
                         + SharedPreferencesUtil.getData(SharedPreferencesUtil.DATA_TICKET, ""));
         return headers;
     }

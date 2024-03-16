@@ -21,6 +21,7 @@ import com.dudu.wechat.api.ContactApi;
 import com.dudu.wechat.api.EmptyApi;
 import com.dudu.wechat.api.LoginApi;
 import com.dudu.wechat.dao.ContactDao;
+import com.dudu.wechat.model.BaseRequest;
 import com.dudu.wechat.model.User;
 import com.dudu.wechat.model.request.InitClientRequest;
 import com.dudu.wechat.model.response.GetContactsResponse;
@@ -34,6 +35,7 @@ import com.dudu.wechat.utils.NetworkUtil;
 import com.dudu.wechat.utils.QRCodeUtil;
 import com.dudu.wechat.utils.SharedPreferencesUtil;
 import com.google.android.material.card.MaterialCardView;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -181,13 +183,19 @@ public class QRCodeLoginActivity extends BaseActivity {
                                                                                         Response<GetContactsResponse>
                                                                                         contactsResponse) {
                                                                                             Log.e("","存储好友");
+                                                                                            Log.e("req_url",call.request().url().toString());
                                                                                             ArrayList<User> contactsList = contactsResponse.body().MemberList;
-                                                                                            WechatDatabase db = Room.databaseBuilder(QRCodeLoginActivity.this,WechatDatabase.class,"wechat").build();
-                                                                                            ContactDao dao = db.getContactsDao();
-                                                                                            for(User u : contactsList){
-                                                                                                dao.insert(u);
-                                                                                                Log.e("插入",u.NickName);
-                                                                                            }
+                                                                                            Log.e("friend_count",String.valueOf(contactsResponse.body().MemberCount));
+                                                                                            Log.e("resp",new Gson().toJson(contactsResponse.body()));
+                                                                                            Log.e("base_req",new Gson().toJson(new BaseRequest()));
+                                                                                            new Thread(()->{                                                                             
+                                                                                                WechatDatabase db = Room.databaseBuilder(QRCodeLoginActivity.this,WechatDatabase.class,"wechat").allowMainThreadQueries().build();
+                                                                                                ContactDao dao = db.getContactsDao();
+                                                                                                for(User u : contactsList){
+                                                                                                    dao.insert(u);
+                                                                                                    Log.e("插入",u.NickName);
+                                                                                                }
+                                                                                            }).run();
                                                                                         }
                                                                                     @Override
                                                                                     public void onFailure(Call<GetContactsResponse> call,Throwable t) {
