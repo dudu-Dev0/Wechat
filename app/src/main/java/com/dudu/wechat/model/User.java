@@ -2,12 +2,13 @@ package com.dudu.wechat.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import com.dudu.wechat.model.converter.UserListConverter;
 import java.util.ArrayList;
 
-@Entity(tableName = "contacts")
+@Entity(tableName = "contacts", indices = {@Index(value = {"UserName"},unique = true)})
 public class User {
     @PrimaryKey(autoGenerate = true)
     @NonNull

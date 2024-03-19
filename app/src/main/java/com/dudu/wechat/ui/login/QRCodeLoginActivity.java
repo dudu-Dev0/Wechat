@@ -28,6 +28,7 @@ import com.dudu.wechat.model.response.GetContactsResponse;
 import com.dudu.wechat.model.response.InitResponse;
 import com.dudu.wechat.ui.BaseActivity;
 import com.dudu.wechat.utils.BitmapUtil;
+import com.dudu.wechat.utils.CenterThreadPool;
 import com.dudu.wechat.utils.DensityUtil;
 import com.dudu.wechat.utils.HeaderParser;
 import com.dudu.wechat.utils.JavaScriptUtil;
@@ -74,7 +75,7 @@ public class QRCodeLoginActivity extends BaseActivity {
         titleTv = (TextView) findViewById(R.id.title);
 
         refreshQRCode();
-        mThread = new Thread(()->{
+        CenterThreadPool.run(()->{
             while(!isLogin) {
                 if(isLogin) break;
                 if (!uuid.equals("")&&!isRequesting) {
@@ -83,7 +84,7 @@ public class QRCodeLoginActivity extends BaseActivity {
                 }
             }
         });
-        mThread.start();
+        
 
         ((ImageView) findViewById(R.id.qr_code_view))
                 .setOnClickListener(
@@ -188,14 +189,19 @@ public class QRCodeLoginActivity extends BaseActivity {
                                                                                             Log.e("friend_count",String.valueOf(contactsResponse.body().MemberCount));
                                                                                             Log.e("resp",new Gson().toJson(contactsResponse.body()));
                                                                                             Log.e("base_req",new Gson().toJson(new BaseRequest()));
-                                                                                            new Thread(()->{                                                                             
-                                                                                                WechatDatabase db = Room.databaseBuilder(QRCodeLoginActivity.this,WechatDatabase.class,"wechat").allowMainThreadQueries().build();
+                                                                                            CenterThreadPool.run(()->{                                                                             
+                                                                                                WechatDatabase db = Room.databaseBuilder(QRCodeLoginActivity.this,WechatDatabase.class,"wechat.db").build();
                                                                                                 ContactDao dao = db.getContactsDao();
                                                                                                 for(User u : contactsList){
-                                                                                                    dao.insert(u);
+                                                                                                    if(dao.getByName(u.UserName).size()==0) {
+                                                                                                    	dao.insert(u);
+                                                                                                    }else{
+                                                                                                        dao.update(u);
+                                                                                                    }
+                                                                                                    
                                                                                                     Log.e("插入",u.NickName);
                                                                                                 }
-                                                                                            }).run();
+                                                                                            });
                                                                                         }
                                                                                     @Override
                                                                                     public void onFailure(Call<GetContactsResponse> call,Throwable t) {
