@@ -1,5 +1,6 @@
 package com.dudu.wechat.ui.home;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,8 @@ import com.dudu.wechat.ui.BaseActivity;
 import com.dudu.wechat.utils.DensityUtil;
 import java.util.concurrent.TimeUnit;
 
+
+@SuppressLint("RestrictedApi")
 public class HomeActivity extends BaseActivity {
     private ViewPager viewPager;
     private TextView title;
