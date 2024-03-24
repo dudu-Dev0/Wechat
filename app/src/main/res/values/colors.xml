@@ -14,4 +14,6 @@
     <color name="textColorDark">#D2D3D3</color>
      
     <color name="textColorDarker">#A6A6A7</color>
+    
+    <color name="indicatorColorSelected">#4D4D4D</color>
 </resources>
