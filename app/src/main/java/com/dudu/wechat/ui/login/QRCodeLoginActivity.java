@@ -23,6 +23,7 @@ import com.dudu.wechat.api.LoginApi;
 import com.dudu.wechat.dao.ContactDao;
 import com.dudu.wechat.model.BaseRequest;
 import com.dudu.wechat.model.User;
+import com.dudu.wechat.model.request.BatchGetContactRequest;
 import com.dudu.wechat.model.request.InitClientRequest;
 import com.dudu.wechat.model.response.GetContactsResponse;
 import com.dudu.wechat.model.response.InitResponse;
@@ -39,6 +40,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -107,7 +109,7 @@ public class QRCodeLoginActivity extends BaseActivity {
                         try {
                             String responseBody = response.body().string();
                             Log.e("resp", responseBody);
-                            isRequesting = false;
+                            
                             if (response.isSuccessful()) {
                                 runOnUiThread(
                                         () -> {
@@ -176,6 +178,24 @@ public class QRCodeLoginActivity extends BaseActivity {
                                                                                 SharedPreferencesUtil.putData(SharedPreferencesUtil.USER_NAME,self.UserName);
                                                                                 SharedPreferencesUtil.putData(SharedPreferencesUtil.NICK_NAME,self.NickName);
                                                                                 SharedPreferencesUtil.putData(SharedPreferencesUtil.USER_AVATAR,NetworkUtil.MAIN_BASE_URL+self.HeadImgUrl);
+                                                                                List<String> sessions = new ArrayList<>();
+                                                                                String chatSet = initResponse.body().ChatSet;
+                                                                                
+                                                                                //int index = 0;
+                                                                                if(chatSet.length()>0) {
+                                                                                    while(true){
+                                                                                        if(chatSet.length()<2) {
+                                                                                            break;
+                                                                                        }
+                                                                                        Log.e("add","add");
+                                                                                        sessions.add(chatSet.substring(0,chatSet.indexOf(",")));
+                                                                                        chatSet = chatSet.substring(chatSet.indexOf(",")+1,chatSet.length());
+                                                                                        //index = chatSet.indexOf(",");
+                                                                                    }
+                                                                                    Log.e("sessions",sessions.toString());
+                                                                                    SharedPreferencesUtil.putListData(SharedPreferencesUtil.SESSIONS_LIST,sessions);
+                                                                
+                                                                                }
                                                                                 Call<GetContactsResponse> getContactsCall = NetworkUtil.create(ContactApi.class).getContacts((String)SharedPreferencesUtil.getData(SharedPreferencesUtil.PASS_TICKET,""),(String)SharedPreferencesUtil.getData(SharedPreferencesUtil.SKEY,""));
                                                                                 getContactsCall.enqueue( new Callback<GetContactsResponse>() {
                                                                                     @Override
@@ -190,8 +210,7 @@ public class QRCodeLoginActivity extends BaseActivity {
                                                                                             Log.e("resp",new Gson().toJson(contactsResponse.body()));
                                                                                             Log.e("base_req",new Gson().toJson(new BaseRequest()));
                                                                                             CenterThreadPool.run(()->{                                                                             
-                                                                                                WechatDatabase db = Room.databaseBuilder(QRCodeLoginActivity.this,WechatDatabase.class,"wechat.db").build();
-                                                                                                ContactDao dao = db.getContactsDao();
+                                                                                                ContactDao dao = WechatDatabase.getInstance(QRCodeLoginActivity.this).getContactsDao();
                                                                                                 for(User u : contactsList){
                                                                                                     if(dao.getByName(u.UserName).size()==0) {
                                                                                                     	dao.insert(u);
@@ -207,7 +226,41 @@ public class QRCodeLoginActivity extends BaseActivity {
                                                                                     public void onFailure(Call<GetContactsResponse> call,Throwable t) {
                                                                                         t.printStackTrace();
                                                                                     }
-                                                                                });
+                                                                                });/*
+                                                                                CenterThreadPool.run(()->{                                                                             
+                                                                                    ContactDao dao = WechatDatabase.getInstance(QRCodeLoginActivity.this).getContactsDao();
+                                                                                    List<User> list = dao.getGroups();
+                                                                                    Call<GetContactsResponse> groupMembersCall = NetworkUtil.create(ContactApi.class,NetworkUtil.MAIN_BASE_URL).batchGetContact(passTicket,System.currentTimeMillis(),new BatchGetContactRequest(list.size(),list));
+                                                                                    groupMembersCall.enqueue( new Callback<GetContactsResponse>() {
+                                                                                        @Override
+                                                                                        public void onResponse(
+                                                                                            Call<GetContactsResponse> call,
+                                                                                            Response<GetContactsResponse>
+                                                                                            contactsResponse) {
+                                                                                                Log.e("","更新群成员信息");
+                                                                                                Log.e("req_url",call.request().url().toString());
+                                                                                                Log.e("resp_sessions",new Gson().toJson(contactsResponse.body()));
+                                                                                                ArrayList<User> contactsList = contactsResponse.body().ContactList;
+                                                                                                CenterThreadPool.run(()->{                                                                             
+                                                                                                    WechatDatabase db = Room.databaseBuilder(QRCodeLoginActivity.this,WechatDatabase.class,"wechat.db").build();
+                                                                                                    ContactDao dao = db.getContactsDao();
+                                                                                                    for(User u : contactsList){
+                                                                                                        u.isSession = true;
+                                                                                                        if(dao.getByName(u.UserName).size()==0) {
+                                                                                                            dao.insert(u);
+                                                                                                        }else{
+                                                                                                            dao.update(u);
+                                                                                                        }
+                                                                                                        Log.e("更新群成员",u.NickName);
+                                                                                                    }
+                                                                                                });
+                                                                                            }
+                                                                                        @Override
+                                                                                        public void onFailure(Call<GetContactsResponse> call,Throwable t) {
+                                                                                            t.printStackTrace();
+                                                                                        }
+                                                                                    });
+                                                                                });*/
                                                                             }
 
                                                                             @Override
@@ -290,6 +343,7 @@ public class QRCodeLoginActivity extends BaseActivity {
                                                                 Toast.LENGTH_SHORT)
                                                         .show());
                             }
+                            isRequesting = false;
                         } catch (Exception err) {
                             err.printStackTrace();
                         }

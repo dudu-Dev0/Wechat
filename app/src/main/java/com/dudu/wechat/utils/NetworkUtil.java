@@ -16,12 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkUtil {
 
-    public static final String LOGIN_BASE_URL = "https://login.wx.qq.com/";
-    public static final String MAIN_BASE_URL = "https://wx.qq.com/";
-    public static final String FILE_BASE_URL = "https://file.wx.qq.com/";
-    public static final String SYNC_BASE_URL = "https://webpush.wx.qq.com/";
+    public static final String LOGIN_BASE_URL = "https://login.wx.qq.com";
+    public static final String MAIN_BASE_URL = "https://wx.qq.com";
+    public static final String FILE_BASE_URL = "https://file.wx.qq.com";
+    public static final String SYNC_BASE_URL = "https://webpush.wx.qq.com";
 
-    private static HashMap<String, String> LOGIN_HEADERS() {
+    public static HashMap<String, String> LOGIN_HEADERS() {
         HashMap<String, String> headers = new HashMap<>();
         headers.put(
                 "User-Agent",
@@ -33,7 +33,7 @@ public class NetworkUtil {
         return headers;
     }
 
-    private static HashMap<String, String> WX_HEADERS() {
+    public static HashMap<String, String> WX_HEADERS() {
         HashMap<String, String> headers = new HashMap<>();
         headers.put(
                 "User-Agent",

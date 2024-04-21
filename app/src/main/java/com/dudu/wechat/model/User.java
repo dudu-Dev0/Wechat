@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 @Entity(tableName = "contacts", indices = {@Index(value = {"UserName"},unique = true)})
 public class User {
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
-    public int id;
 
     public long Uni;
+    
+    @PrimaryKey
+    @NonNull
     public String UserName;
     public String NickName;
     public String DisplayName;
@@ -27,6 +27,8 @@ public class User {
     public ArrayList<User> MemberList;
     public int MemberCount;
     public int IsOwner; // 自己的群？0不是或非群聊
-
+    public boolean isSession;//是否展示在聊天页
+    public String EncryChatRoomId;
+    
     public User() {}
 }

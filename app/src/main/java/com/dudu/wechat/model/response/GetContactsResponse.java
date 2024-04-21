@@ -7,4 +7,7 @@ public class GetContactsResponse {
     public BaseResponse BaseResponse;
     public int MemberCount;
     public ArrayList<User> MemberList;
+    
+    public int Count;
+    public ArrayList<User> ContactList;//懒得写了，直接复用
 }

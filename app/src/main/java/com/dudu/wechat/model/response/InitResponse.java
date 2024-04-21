@@ -12,5 +12,6 @@ public class InitResponse{
     public User User;
     public String SKey;
     public long ClientVersion;
+    public String ChatSet;
 }
 

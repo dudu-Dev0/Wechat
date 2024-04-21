@@ -25,6 +25,9 @@ public interface ContactDao {
     @Query("SELECT * FROM contacts WHERE UserName GLOB :name")
     List<User> getByName(String name);
     
+    @Query("SELECT * FROM contacts WHERE isSession GLOB 1")
+    List<User> getSessions();
+    
     @Insert
     void insert(User user);
 

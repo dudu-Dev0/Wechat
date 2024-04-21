@@ -14,7 +14,8 @@ public class HomeFragmentAdapter extends FragmentPagerAdapter {
     public HomeFragmentAdapter(FragmentManager fm) {
         super(fm);
         mFragments.add(new SessionsFragment());
-        mFragments.add(new SessionsFragment());
+        mFragments.add(new ContactsFragment());
+		mFragments.add(new MyselfFragment());
         this.mFragments = mFragments;
     }
 

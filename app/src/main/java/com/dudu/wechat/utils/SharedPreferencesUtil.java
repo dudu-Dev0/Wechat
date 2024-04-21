@@ -37,7 +37,7 @@ public class SharedPreferencesUtil {
     public static String SYNC_KET = "sync_key";
     public static String PASS_TICKET = "pass_ticket";
     public static String SKEY = "skey";
-    
+    public static String SESSIONS_LIST = "sessions_list";
     	
  
     private SharedPreferencesUtil(Context context, String name) {
